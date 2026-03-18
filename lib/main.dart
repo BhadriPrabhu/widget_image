@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
+import 'splash_screen.dart';
 
 void main() => runApp(const MotivationApp());
 
@@ -13,7 +14,7 @@ class MotivationApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(useMaterial3: true),
-      home: const MotivationHome(),
+      home: const SplashScreen(),
     );
   }
 }
