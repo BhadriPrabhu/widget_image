@@ -177,11 +177,13 @@ class _MotivationHomeState extends State<MotivationHome> {
           Positioned(
             top: -100,
             right: -50,
+            // ignore: deprecated_member_use
             child: _buildBlurCircle(Colors.teal.withOpacity(0.15), 300),
           ),
           Positioned(
             bottom: -50,
             left: -50,
+            // ignore: deprecated_member_use
             child: _buildBlurCircle(Colors.blueAccent.withOpacity(0.1), 250),
           ),
 
@@ -236,8 +238,10 @@ class _MotivationHomeState extends State<MotivationHome> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
+        // ignore: deprecated_member_use
         color: Colors.white.withOpacity(0.03),
         borderRadius: BorderRadius.circular(12),
+        // ignore: deprecated_member_use
         border: Border.all(color: Colors.white.withOpacity(0.08)),
       ),
       child: Row(
@@ -289,8 +293,10 @@ class _MotivationHomeState extends State<MotivationHome> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
+        // ignore: deprecated_member_use
         color: Colors.white.withOpacity(0.05),
         borderRadius: BorderRadius.circular(15),
+        // ignore: deprecated_member_use
         border: Border.all(color: Colors.white.withOpacity(0.1)),
       ), 
         child: _activeWidgetIds.isNotEmpty ?
@@ -332,9 +338,11 @@ class _MotivationHomeState extends State<MotivationHome> {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
+        // ignore: deprecated_member_use
         border: Border.all(color: Colors.white.withOpacity(0.1), width: 1.5),
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: Colors.tealAccent.withOpacity(0.05),
             blurRadius: 40,
             spreadRadius: 5,
@@ -351,6 +359,7 @@ class _MotivationHomeState extends State<MotivationHome> {
                   fit: BoxFit.cover,
                 )
                 : Container(
+                  // ignore: deprecated_member_use
                   color: Colors.white.withOpacity(0.02),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -358,11 +367,13 @@ class _MotivationHomeState extends State<MotivationHome> {
                       Icon(
                         Icons.add_a_photo_outlined,
                         size: 50,
+                        // ignore: deprecated_member_use
                         color: Colors.white.withOpacity(0.1),
                       ),
                       const SizedBox(height: 16),
                       Text(
                         "No image linked to this Frame",
+                        // ignore: deprecated_member_use
                         style: TextStyle(color: Colors.white.withOpacity(0.2)),
                       ),
                     ],
@@ -376,14 +387,17 @@ class _MotivationHomeState extends State<MotivationHome> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
+        // ignore: deprecated_member_use
         color: Colors.tealAccent.withOpacity(0.03),
         borderRadius: BorderRadius.circular(15),
+        // ignore: deprecated_member_use
         border: Border.all(color: Colors.tealAccent.withOpacity(0.1)),
       ),
       child: Row(
         children: [
           Icon(
             Icons.tips_and_updates_outlined,
+            // ignore: deprecated_member_use
             color: Colors.tealAccent.withOpacity(0.5),
           ),
           const SizedBox(width: 12),
