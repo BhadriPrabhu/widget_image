@@ -14,17 +14,46 @@ class MotivationalWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) {
         for (id in ids) {
             val views = RemoteViews(context.packageName, R.layout.motivation_widget)
-            val file = File(context.filesDir, "motivation.jpg")
+            
+            val baseDir = context.filesDir.parentFile
+            val file = if (baseDir != null) {
+                File(baseDir, "app_flutter/widget_images/motivation_$id.jpg")
+            } else {
+                File(context.filesDir, "widget_images/motivation_$id.jpg")
+            }
 
             if (file.exists()) {
+                // IMAGE EXISTS: Show Image, Hide Text
                 val bitmap = decodeSampledBitmapFromFile(file.absolutePath, 512, 512)
                 views.setImageViewBitmap(R.id.imageView, bitmap)
+                views.setViewVisibility(R.id.imageView, android.view.View.VISIBLE)
+                views.setViewVisibility(R.id.emptyTextView, android.view.View.GONE)
+            } else {
+                // NO IMAGE: Hide Image, Show Placeholder Text
+                views.setViewVisibility(R.id.imageView, android.view.View.GONE)
+                views.setViewVisibility(R.id.emptyTextView, android.view.View.VISIBLE)
             }
 
             manager.updateAppWidget(id, views)
         }
     }
 
+
+    override fun onDeleted(context: Context, appWidgetIds: IntArray) {
+        super.onDeleted(context, appWidgetIds)
+        val baseDir = context.filesDir.parentFile
+        for (id in appWidgetIds) {
+            // MATCH THE PATH USED IN ONUPDATE
+            val file = if (baseDir != null) {
+                File(baseDir, "app_flutter/widget_images/motivation_$id.jpg")
+            } else {
+                File(context.filesDir, "widget_images/motivation_$id.jpg")
+            }
+            
+            if (file.exists()) file.delete()
+        }
+    }
+    
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
         

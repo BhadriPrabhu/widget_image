@@ -15,14 +15,22 @@ class MainActivity: FlutterActivity() {
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
             .setMethodCallHandler { call, result ->
-                if (call.method == "updateWidget") {
-                    updateWidget()
-                    result.success(null)
-                } else {
-                    result.notImplemented()
+                when (call.method) {
+                    "getActiveWidgetIds" -> {
+                        val manager = AppWidgetManager.getInstance(this)
+                        val component = ComponentName(this, MotivationalWidget::class.java)
+                        val ids = manager.getAppWidgetIds(component)
+                        result.success(ids.toList()) 
+                    }
+                    "updateWidget" -> {
+                        updateWidget() // <--- You MUST call this here
+                        result.success(null)
+                    }
+                    else -> result.notImplemented()
                 }
             }
     }
+    
 
     // Inside MainActivity.kt
     private fun updateWidget() {
