@@ -129,6 +129,19 @@ class _MotivationHomeState extends State<MotivationHome> {
     }
   }
 
+  Future<void> _handleRefresh() async {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Syncing with home screen..."), duration: Duration(seconds: 1), backgroundColor: Colors.teal,),
+    );
+
+    await _refreshWidgetIds();
+
+    if(_selectedId != null){
+      await _loadSavedImageForId(_selectedId!);
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,24 +161,30 @@ class _MotivationHomeState extends State<MotivationHome> {
         elevation: 0,
         actions: [
           IconButton(
+            onPressed: _handleRefresh,
+            icon: const Icon(Icons.refresh_rounded, color: Colors.tealAccent),
+            tooltip: "Refresh Widget IDs",
+          ),
+          IconButton(
             icon: const Icon(Icons.info_outline),
             onPressed: () {
               showDialog(
                 context: context,
-                builder: (context) => AlertDialog(
-                  backgroundColor: const Color(0xFF1E293B),
-                  title: const Text('About AuraFrame'),
-                  content: const Text(
-                    'AuraFrame is a Flutter-based app that allows you to set custom images for your home screen widgets. Select a widget ID from the dropdown, pick an image, and see it update in real-time on your home screen!',
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Close'),
+                builder:
+                    (context) => AlertDialog(
+                      backgroundColor: const Color(0xFF1E293B),
+                      title: const Text('About AuraFrame'),
+                      content: const Text(
+                        'AuraFrame is a Flutter-based app that allows you to set custom images for your home screen widgets. Select a widget ID from the dropdown, pick an image, and see it update in real-time on your home screen!',
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('Close'),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
               );
             },
           ),
@@ -298,37 +317,45 @@ class _MotivationHomeState extends State<MotivationHome> {
         borderRadius: BorderRadius.circular(15),
         // ignore: deprecated_member_use
         border: Border.all(color: Colors.white.withOpacity(0.1)),
-      ), 
-        child: _activeWidgetIds.isNotEmpty ?
-         DropdownButtonHideUnderline(
-          child: DropdownButton<int>(
-            value: _selectedId,
-            isExpanded: true,
-            icon: const Icon(
-              Icons.keyboard_arrow_down_rounded,
-              color: Colors.tealAccent,
-            ),
-            dropdownColor: const Color(0xFF1E293B),
-            items:
-                _activeWidgetIds
-                    .map(
-                      (id) => DropdownMenuItem(
-                        value: id,
-                        child: Text(
-                          "Widget Frame #$id",
-                          style: const TextStyle(fontSize: 15),
-                        ),
-                      ),
-                    )
-                    .toList(),
-            onChanged: (val) {
-              if (val != null) {
-                setState(() => _selectedId = val);
-                _loadSavedImageForId(val);
-              }
-            },
-          )
-      ) : const Padding(padding: EdgeInsets.symmetric(vertical: 10), child: Text("No Widgets Detected", style: TextStyle(color: Colors.white, fontSize: 14, ),),),
+      ),
+      child:
+          _activeWidgetIds.isNotEmpty
+              ? DropdownButtonHideUnderline(
+                child: DropdownButton<int>(
+                  value: _selectedId,
+                  isExpanded: true,
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: Colors.tealAccent,
+                  ),
+                  dropdownColor: const Color(0xFF1E293B),
+                  items:
+                      _activeWidgetIds
+                          .map(
+                            (id) => DropdownMenuItem(
+                              value: id,
+                              child: Text(
+                                "Widget Frame #$id",
+                                style: const TextStyle(fontSize: 15),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                  onChanged: (val) {
+                    if (val != null) {
+                      setState(() => _selectedId = val);
+                      _loadSavedImageForId(val);
+                    }
+                  },
+                ),
+              )
+              : const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  "No Widgets Detected",
+                  style: TextStyle(color: Colors.white, fontSize: 14),
+                ),
+              ),
     );
   }
 
