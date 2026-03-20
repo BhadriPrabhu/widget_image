@@ -131,15 +131,18 @@ class _MotivationHomeState extends State<MotivationHome> {
 
   Future<void> _handleRefresh() async {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Syncing with home screen..."), duration: Duration(seconds: 1), backgroundColor: Colors.teal,),
+      const SnackBar(
+        content: Text("Syncing with home screen..."),
+        duration: Duration(seconds: 1),
+        backgroundColor: Colors.teal,
+      ),
     );
 
     await _refreshWidgetIds();
 
-    if(_selectedId != null){
+    if (_selectedId != null) {
       await _loadSavedImageForId(_selectedId!);
     }
-
   }
 
   @override
@@ -217,7 +220,7 @@ class _MotivationHomeState extends State<MotivationHome> {
                   _buildMainConsole(),
                   const SizedBox(height: 20),
                   _buildInstructionCard(),
-                  const SizedBox(height: 100), // Padding for FAB
+                  const SizedBox(height: 100),
                 ],
               ),
             ),
